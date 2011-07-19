@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Extension Preferences</title>
+		<meta charset="utf-8">
+		<script src="script/storage.js"></script>
+		<script src="script/options_page.js"></script>
+		<script src="script/default_settings.js"></script>
+		<script>
+			// Include storage.js and options_page.js, then create a SettingStorage
+			// object and call OptionsPage.init() with it as the only argument
+			OptionsPage.init(storage);
+		</script>
+	</head>
+	<body>
+      <header>
+			<h1>OperaExtOptions.js Demo</h1>
+		</header>
+		
+		<section>
+			<h3>Preferences</h3>
+			<fieldset>
+				<!-- To link an <input> to storage, set its name to the name of a setting.
+					This system only uses the element's name, so you are free to use 
+					whatever id you want (or no id at all if you aren't using labels). -->
+				<p>
+					<input name="checkbox" id="checkbox" type="checkbox">
+					<label for="checkbox">Checkbox setting</label>
+				</p>
+				
+				<!-- To keep a named <input> from linking to storage, add the "data-nosave" attribute -->
+				<p>
+					<input name="unsaved" id="unsaved" type="checkbox" data-nosave>
+					<label for="unsaved">Unsaved checkbox setting</label>
+				</p>
+				
+				<!-- By adding the "data-resets" attribute to a <button> or any clickable element,
+					you can create a button that resets a setting to its default value. -->
+				<p>
+					<input name="textbox" id="textbox" type="text">
+					<button data-resets="textbox">Reset to Default</button>
+					<label for="textbox">Textbox setting</label>
+				</p>
+				
+				<!-- number or range inputs with min/max limits will have their values automatically
+					coerced to those limits. An empty numeric control will be changed to 0. -->
+				<p>
+					<input name="numeric" id="numeric" type="number" min="0" max="55.5">
+					<a data-resets="numeric" href="#">Reset to Default</a>
+					<label for="numeric">Numeric setting</label>
+				</p>
+				
+				<p>
+					<input name="range" id="range" type="range" min="-1" max="1" step="0.25">
+					<label for="range">Range setting</label>
+				</p>
+				
+				<p>
+					<input name="color" id="color" type="color">
+					<label for="color">Color setting</label>
+				</p>
+				
+				<p>
+					<input name="date" id="date" type="date">
+					<label for="date">Date setting</label>
+				</p>
+				
+				<!-- Radio buttons with the same name are linked to the same setting -->
+				<p>
+					<input name="radio" id="radio_1" type="radio" value="one">
+					<label for="radio_1">One</label>
+					<input name="radio" id="radio_2" type="radio" value="two">
+					<label for="radio_2">Two</label>
+					<input name="radio" id="radio_3" type="radio" value="three">
+					<label for="radio_3">Three</label>
+					<button data-resets="radio">Reset to Default</button>
+					Radio button setting
+				</p>
+				
+				<!-- Placing radio buttons inside a <form> will slightly improve performance,
+					but isn't necessary -->
+				<form>
+					
+					<input name="formradio" id="formradio_1" type="radio" value="one">
+					<label for="formradio_1"> One</label>
+					<input name="formradio" id="formradio_2" type="radio" value="two">
+					<label for="formradio_2">Two</label>
+					<input name="formradio" id="formradio_3" type="radio" value="three">
+					<label for="formradio_3">Three</label>
+					- Radio button setting in &lt;form&gt;
+				</form>
+				
+				<!-- <select> inputs work too -->
+				<p>
+					<select name="select" id="select">
+						<option value="foo">Foo</option>
+						<option value="bar">Bar</option>
+						<option value="baz">Baz</option>
+					</select>
+					<button data-resets="select">Reset to Default</button>
+					<label for="select">Select setting</label>
+				</p>
+				
+				<!-- dynamically added <input> with existing reset button -->
+				<p>
+					<span id="dynamic_cont1"></span>
+					<button data-resets="dynamic1">Reset to Default</button>
+					<label>Dynamically added &lt;input&gt;</label>
+				</p>
+			
+				<!-- dynamically added <select> with dynamically added reset button -->
+				<p>
+					<span id="dynamic_cont2"></span>
+					<label>Dynamically added &lt;select&gt;</label>
+				</p>
+				
+			</fieldset>
+		</section>
+		
+		<section>
+			<h3>Storage Debug (press ~ to update)</h3>
+			<div id="storage_list">(press ~ to show)</div>
+		</section>
+		
+		<footer>
+			<hr>
+			<p>
+				OperaExtOptions.js is an open-source library by Joel Spadin which can be found 
+				<a href="https://github.com/ChaosinaCan/OperaExtOptions.js">here on Github</a>.
+			</p>
+		</footer>
+		
+		<!-- This script showcases some of the more advanced features. For most 
+			options pages, you can safely ignore anything in this script -->
+		<script>
+			// Dynamically added elements
+			// Any element added to the page after onDOMContentLoaded must be set up
+			// by calling OptionsPage.addInput() on it.
+			addEventListener('load', function() {
+				
+				// Create a new text input add call OptionsPage.addInput() to set it up.
+				// The existing reset button for "dynamic1" will automatically be found.
+				var container = document.getElementById('dynamic_cont1');
+				var input = document.createElement('input');
+				input.name = 'dynamic1';
+				input.type = 'text';
+				container.appendChild(input);
+				OptionsPage.addInput(input);
+
+				// Create a new select element with an accompanying reset button and
+				// call OptionsPage.addInput() to set it up.
+				container = document.getElementById('dynamic_cont2');
+				var select = document.createElement('select');
+				select.name = 'dynamic2';
+				
+				// Fill the select element with options
+				for (var i = 0; i < 10; i++) {
+					var option = document.createElement('option');
+					option.value = option.textContent = i;
+					select.appendChild(option);
+				}
+				
+				// Create the reset button
+				var reset = document.createElement('button');
+				reset.textContent = 'Reset to Default';
+
+				container.appendChild(select);
+				container.appendChild(reset);
+				OptionsPage.addInput(select, reset);
+			}, false);
+			
+			function scrollToElement(element) {
+				var y = 0;
+				while(element != null){
+					y += element.offsetTop;
+					element = element.offsetParent;
+				}
+				window.scrollTo(0, y);
+			}
+			
+			
+			// Debug code. Press ~ to show all objects stored in the web storage
+			// object used or update the list. Press Shift+~ to hide the list;
+			addEventListener('keypress', function(e) {
+				// List storage
+				if (e.keyCode == 96) {
+					var container = document.getElementById('storage_list');
+					container.innerHTML = '';
+					container.appendChild(OptionsPage.debugStorage());
+					scrollToElement(container);
+				}
+				// Hide storage
+				else if (e.keyCode == 126) {
+					document.getElementById('storage_list').innerHTML = '';
+				}
+			}, false);
+		</script>
+	</body>
+</html>
