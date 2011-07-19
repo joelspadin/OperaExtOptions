@@ -1,0 +1,60 @@
+OperaExtOptions.js 1.0
+
+This is a JavaScript library for automating the options pages of Opera
+extensions. It does two things. First, it provides a class that uses JSON to 
+save arbitrary objects to widget.preferences (or other storage) instead of only 
+strings. Second, it links the <input> and <select> elements of your options page
+with storage so that the page is automatically popluated with settings, and 
+changes to those settings are saved back to storage.
+
+The only files you need to add to your project are the two script files in the
+build directory: storage.js and options_page.js. Everything else in the src
+directory is an example extension.
+
+
+
+To use this library, you should first include storage.js in your extension's 
+index.html, then include storage.js and options_page.js in options.html. You 
+should then create a SettingStorage object to load and save your settings.
+In the example, this is done in default_settings.js, which is also included in 
+both index.html and options.html. You can also provide a list of settings and 
+their default values so that the library can initialize those settings on the 
+first run and so the options page can reset settings to their default values.
+
+Once you have created a SettingStorage object, you should call its init() method
+at the beginning of your background script (in index.html). This will find any
+uninitialized settings and set them to their default values. This means that any
+settings you add in later versions will automatically be initialized.
+
+To set up your options page, first create a SettingStorage object with the same
+settings as before, (done in the example by including default_setting.js) then
+call OptionsPage.init(), passing the storage object as the only argument. This
+will walk through all the <input> and <select> elements on the page, linking 
+them to settings with the same name. 
+
+Now you're done. Any setting in your options page that can be represented by an 
+<input> or <select> element or radio button group of <input> elements will 
+automatically be saved to widget.preferences or your storage object of choice.
+
+To retrieve setting values, use the get() method of your SettingStorage object.
+You can also manually change settings through this object. See the documentation
+for more details.
+
+
+
+There are some attributes you can set on elements to change how they behave.
+See options.html in the example for example usages.
+
+data-nosave: This element should not be linked to a setting.
+data-resets="setting": This element will reset "setting" when clicked.
+
+
+   
+The build and makedoc scripts in the root directory work with my own Cygwin
+setup. They may require some modification to work in a normal Linux environment.
+makedoc also requires JSDoc ( http://code.google.com/p/jsdoc-toolkit/ )
+
+For more information:
+https://github.com/ChaosinaCan/OperaExtOptions.js
+http://my.opera.com/spadija/
+
