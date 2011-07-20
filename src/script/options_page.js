@@ -216,11 +216,12 @@ var OptionsPage = new function OptionsPage() {
 	
 	/**
 	 * Initializes the options page
-	 * @param {SettingStorage} settingstorage The storage object to use when 
-	 *		loading and saving settings.
+	 * @param {SettingStorage} [settingstorage] The storage object to use when 
+	 *		loading and saving settings. If unused, a new SettingStorage object
+	 *		with default settings will be used.
 	 */
 	this.init = function(settingstorage) {
-		storage = settingstorage;
+		storage = settingstorage || new SettingStorage();
 		
 		window.addEventListener('DOMContentLoaded', onDOMContentLoaded, false);
 	}
