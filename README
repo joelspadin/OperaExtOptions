@@ -1,4 +1,4 @@
-OperaExtOptions.js 1.0
+OperaExtOptions 1.0
 
 This is a JavaScript library for automating the options pages of Opera
 extensions. It does two things. First, it provides a class that uses JSON to 
@@ -55,6 +55,6 @@ setup. They may require some modification to work in a normal Linux environment.
 makedoc also requires JSDoc ( http://code.google.com/p/jsdoc-toolkit/ )
 
 For more information:
-https://github.com/ChaosinaCan/OperaExtOptions.js
+https://github.com/ChaosinaCan/OperaExtOptions
 http://my.opera.com/spadija/
 
