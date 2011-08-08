@@ -44,11 +44,11 @@ var OptionsPage = new function OptionsPage() {
 	
 	/**
 	 * @private
-	 * Returns true if the element is a <input> or <select> element
+	 * Returns true if the element is a <input>,  <select>, or <textarea> element
 	 */
 	function isInput(element) {
 		var tagname = element.tagName.toLowerCase();
-		return tagname == 'input' || tagname == 'select';
+		return tagname == 'input' || tagname == 'select' || tagname == 'textarea';
 	}
 	
 	/**
@@ -66,6 +66,20 @@ var OptionsPage = new function OptionsPage() {
 		return null;
 	}
 	
+	/**
+	 * @private
+	 * Gets a transform function set on an input
+	 */
+	function getTransformFunction(element, type) {
+		var func = element.getAttribute('data-' + type);
+		if (func === undefined)
+			return null;
+		if (typeof func == 'function')
+			return func;
+		if (typeof func == 'string') 
+			return window[func];
+		return null;
+	}
 	
 	/**
 	 * @private
@@ -98,6 +112,11 @@ var OptionsPage = new function OptionsPage() {
 		var name = name || element.name || '';
 		var type = type || element.type.toLowerCase();
 		var value = storage.get(name);
+		
+		var filter = getTransformFunction(element, 'loadfunc');
+		if (filter) 
+			value = filter(value);
+		
 		if(checkable[type] === true) {
 			if (radio[type] === true)
 				element.checked = (element.value == value);
@@ -146,6 +165,10 @@ var OptionsPage = new function OptionsPage() {
 		}
 		else
 			value = element.value;
+		
+		var filter = getTransformFunction(element, 'savefunc');
+		if (filter) 
+			value = filter(value);
 		
 		storage.set(name, value);	
 	}
@@ -203,7 +226,7 @@ var OptionsPage = new function OptionsPage() {
 	 */
 	function onDOMContentLoaded() {		
 		// walk and set the elements accordingly to the storage
-		formElements = document.querySelectorAll('input,select')
+		formElements = document.querySelectorAll('input,select,textarea')
 		walkElements(setupElement);
 		
 		setupAllResetButtons();
