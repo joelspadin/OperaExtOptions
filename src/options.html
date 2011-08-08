@@ -65,6 +65,17 @@
 					<label for="date">Date setting</label>
 				</p>
 				
+				<p>
+					<label for="textarea">Textarea</label> <br>
+					<textarea name="textarea" id="textarea" rows="6" cols="50"></textarea>
+				</p>
+				
+				<p>
+					<label for="transform">Textarea saved as array of lines</label> <br>
+					<textarea name="transform" id="transform" rows="6" cols="50" 
+								 data-loadfunc="joinLines" data-savefunc="splitLines"></textarea>
+				</p>
+				
 				<!-- Radio buttons with the same name are linked to the same setting -->
 				<p>
 					<input name="radio" id="radio_1" type="radio" value="one">
@@ -133,6 +144,21 @@
 		<!-- This script showcases some of the more advanced features. For most 
 			options pages, you can safely ignore anything in this script -->
 		<script>
+			// Filter functions
+			function splitLines(data) {
+				console.log(data);
+				if (!data)
+					data = '';
+				return data.replace("\r\n", "\n").split("\n").map(function(item) { return item.trim() });
+			}
+			
+			function joinLines(data) {
+				console.log(data);
+				if (!data)
+					data = [];
+				return data.map(function(item) { return item.trim() }).join("\n");
+			}
+			
 			// Dynamically added elements
 			// Any element added to the page after onDOMContentLoaded must be set up
 			// by calling OptionsPage.addInput() on it.

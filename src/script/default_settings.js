@@ -14,6 +14,8 @@ var storage = new SettingStorage([
 	['numeric', 42],
 	['range', 0],
 	['color', '#ff0000'],
+	['textarea', 'This is a <textarea>.\r\nIt has multiple lines.'],
+	['transform', [ 'foo', 'bar', 'baz' ]],
 	['radio', 'one'],
 	['formradio', 'two'],
 	['select', 'bar'],

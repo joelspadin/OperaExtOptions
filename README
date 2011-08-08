@@ -1,4 +1,4 @@
-OperaExtOptions 1.0
+OperaExtOptions 1.0.1
 
 This is a JavaScript library for automating the options pages of Opera
 extensions. It does two things. First, it provides a class that uses JSON to 
@@ -47,7 +47,16 @@ See options.html in the example for example usages.
 
 data-nosave: This element should not be linked to a setting.
 data-resets="setting": This element will reset "setting" when clicked.
+data-loadfunc="function": The saved value will be passed to a function which can
+	transform the value before it is loaded into the element. The function should
+	take one argument, the saved value, and return the value to be displayed.
+data-savefunc="function": The value displayed in the element will be passed to
+	a function which can transform the value before it is saved to storage. The
+	function should take one argument, the value displayed in the element, and
+	return the value to be saved.
 
+For data-loadfunc and data-savefunc, "function" can be either a function or the 
+name of a function in window (global) scope.
 
    
 The build and makedoc scripts in the root directory work with my own Cygwin
@@ -58,3 +67,10 @@ For more information:
 https://github.com/ChaosinaCan/OperaExtOptions
 http://my.opera.com/spadija/
 
+
+
+Changelog
+
+Aug 7, 2011:
+	- Added <textarea> support
+	- Added support for transform functions
