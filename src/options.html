@@ -146,14 +146,12 @@
 		<script>
 			// Filter functions
 			function splitLines(data) {
-				console.log(data);
 				if (!data)
 					data = '';
 				return data.replace("\r\n", "\n").split("\n").map(function(item) { return item.trim() });
 			}
 			
 			function joinLines(data) {
-				console.log(data);
 				if (!data)
 					data = [];
 				return data.map(function(item) { return item.trim() }).join("\n");

@@ -42,6 +42,9 @@ if ( !Function.prototype.bind ) {
  *	@param [options.globalInit] Set to "true" to make initSetting ignore the setting
  *		prefix. This option mostly exists to make this library compatible with 
  *		Tab Vault's storage format.
+ *	@param [options.useAccessors] Set to "false" to disable creating accessor
+ *		properties for each setting. You should disable this if you plan to support
+ *		old versions of Opera which do not support Object.defineProperties().
  *	@param [options.storage] The web storage object to use. Defaults to widget.preferences
  */
 function SettingStorage() {
@@ -51,9 +54,10 @@ function SettingStorage() {
 	this.storage = widget.preferences;
 	this.initSetting = '__initialized';
 	this.globalInit = false;
+	this.useAccessors = true;
 
 	var firstRun = false;
-	this.__defineGetter__('firstRun', function() { return firstRun });
+	this.__defineGetter__('firstRun', function() {return firstRun});
 
 	/**
 	 * @private
@@ -79,10 +83,15 @@ function SettingStorage() {
 				this.initSetting = options.initSetting;
 			if (isDefined(options.globalInit))
 				this.globalInit = options.globalInit;
+			if (isDefined(options.useAccessors))
+				this.useAccessors = options.useAccessors;
 		}
 		
 		if (!getInit.bind(this)())
 			firstRun = true;
+		
+		if (this.useAccessors)
+			defineAccessors.bind(this)();
 	}
 	
 	/**
@@ -113,6 +122,31 @@ function SettingStorage() {
 		}
 		else
 			this.set(this.initSetting, value);
+	}
+
+	/**
+	 *@private
+	 * Defines properties so settings can be referred to by name
+	 */
+	function defineAccessors() {
+		var descriptors = {};
+		var reserved = ['init', 'reset', 'resetAll', 'fillDefaults', 'get', 'set', 'getAll', 'setAll'];
+		
+		function desc(name) {
+			return {
+				get: function() { return this.get(name) },
+				set: function(x) { this.set(name, x) },
+				enumerable: true,
+			}
+		}
+		
+		for (var i = 0; i < this.defaults.length; i++) {
+			var name = this.defaults[i][0];
+			if (reserved.indexOf(name) == -1)
+				descriptors[name] = desc(name);
+		}
+		
+		Object.defineProperties(this, descriptors);
 	}
 
 
@@ -205,6 +239,8 @@ function SettingStorage() {
 	
 	init.bind(this)(arguments[0], arguments[1]);
 }
+
+
 
 
 /*

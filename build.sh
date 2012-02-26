@@ -1,5 +1,3 @@
-#I use Cygwin. This makes shell scripts runnable.
-source ~/.bash_profile
 
 name="TestExtension"
 

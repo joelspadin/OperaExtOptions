@@ -1,4 +1,4 @@
-OperaExtOptions 1.0.1
+OperaExtOptions 1.0.2
 
 This is a JavaScript library for automating the options pages of Opera
 extensions. It does two things. First, it provides a class that uses JSON to 
@@ -70,6 +70,13 @@ http://my.opera.com/spadija/
 
 
 Changelog
+
+Feb 26, 2012:
+	- Settings can now be accessed as properties of the SettingStorage object.
+	  If you give a setting a default value when creating the SettingStorage 
+	  object, a property of the same name will be created. For example, if you 
+	  have a setting named "foo", you can now use "storage.foo = 4" instead of
+	  "storage.set('foo', 4)" and "storage.foo" instead of "storage.get('foo')".
 
 Aug 7, 2011:
 	- Added <textarea> support
