@@ -1,7 +1,7 @@
 
 wdir="`pwd`"
-script1="$wdir/build/storage.js"
-script2="$wdir/build/options_page.js"
+script1="$wdir/src/js/storage.js"
+script2="$wdir/src/js/options_page.js"
 list="storage.js options_page.js"
 
 rm -rf ./jsdoc

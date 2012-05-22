@@ -27,6 +27,12 @@ if ( !Function.prototype.bind ) {
  * @class Abstracts a web storage object so that arbitrary objects can be saved via JSON.
  * @property {bool} firstRun true if this is the first time the extension has been
  *		run (this.init() has never been called for this object)
+ *	
+ *	@property {mixed} someSettingName If you set a default value for a setting, 
+ *		a property with the same name will be created. You can use these 
+ *		properties to get and set settings without using the get() method. 
+ *		The name of each property will be the same as the name used when defining
+ *		default values (it will not be "someSettingName").
  * 
  * @constructor
  * @param [defaults] An array of default setting values. Each default value 
@@ -125,13 +131,14 @@ function SettingStorage() {
 	}
 
 	/**
-	 *@private
+	 * @private
 	 * Defines properties so settings can be referred to by name
 	 */
 	function defineAccessors() {
 		var descriptors = {};
 		var reserved = ['init', 'reset', 'resetAll', 'fillDefaults', 'get', 'set', 'getAll', 'setAll'];
 		
+		/** @private */
 		function desc(name) {
 			return {
 				get: function() { return this.get(name) },

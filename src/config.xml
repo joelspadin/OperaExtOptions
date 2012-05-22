@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" version="1.0">
+<widget xmlns="http://www.w3.org/ns/widgets" 
+        version="1.1"
+		id="extensions:opera-ext-options">
 	<name>Opera Extension Options</name>
 	<description>Demo extension for OperaExtOptions.js</description>
 	<author href="http://chaosinacan.com/">Joel Spadin</author>

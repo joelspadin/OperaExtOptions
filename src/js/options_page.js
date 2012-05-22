@@ -286,9 +286,9 @@ var OptionsPage = new function OptionsPage() {
 	}
 	
 	/**
-	 * Sets up a new &lt;input&gt; or &lt;select&gt; element. Use this if an element is
-	 * dynamically added after the options page loads.
-	 * @param {HTMLElement} element The &lt;input&gt; or &lt;select&gt; element to add
+	 * Sets up a new &lt;input&gt;, &lt;select&gt; or &lt;textarea&gt; element. 
+	 * Use this if an element is dynamically added after the options page loads.
+	 * @param {HTMLElement} element The element to add
 	 * @param {HTMLElement} [resetbutton] A &lt;button&gt; or other clickable element
 	 *		that should reset the setting when clicked. If this parameter is unused and a
 	 *		reset button for the setting already exists on the page, it will be used.

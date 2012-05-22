@@ -1,0 +1,145 @@
+html {
+	background-image: -o-skin('Extensions Panel Widget Skin');
+	font: 13px/26px "helvetica neue",arial,sans-serif;
+	color: #000;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+/* Emulate the bar at the top of the extensions manager page. You can turn this
+ * off by adding a "nobar" class to the body element. */
+
+#topbar {
+	position: fixed; 
+	left: 0;
+	right: 0;
+	top: 0;
+	height: 6px;
+	
+	background-image: -o-skin('Panel Full Toolbar Skin');
+}
+
+/* #viewport takes up all the space below #topbar. Its sole purpose is to ensure
+ * that, if the page needs a scrollbar, the scrollbar stays under #topbar */
+
+#viewport {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 5px;
+	bottom: 0px;
+	
+	overflow: auto;
+}
+
+#content {
+	box-sizing: border-box;
+	max-width: 700px;
+	margin: 25px auto 15px;
+	padding: 25px 50px;
+	overflow: auto;
+	
+	background-image: -o-skin('Extensions Panel List Skin');
+}
+
+/* If the top bar is removed, hide the bar and reposition #viewport */
+
+body.nobar #topbar {
+	display: none;
+}
+
+body.nobar #viewport {
+	top: 0;
+}
+
+
+header {
+	padding: 0 50px 10px;
+	margin: 0 0 2em;
+	
+	border-bottom: 1px solid rgba(0,0,0,0.15);
+	box-shadow: 0 1px #fff;
+}
+
+footer {
+	padding: 0;
+	margin: 25px 0 0;
+	
+	text-align: center;
+	border-top: 1px solid #fff;
+	box-shadow: 0 -1px rgba(0,0,0,0.15);
+}
+
+
+fieldset {
+	margin-bottom: 40px;
+	padding: 0 20px;
+	
+	border: none;
+	border-radius: 2px;
+	background: rgba(150,160,200,0.25);
+}
+
+button {
+	line-height: normal;
+}
+
+
+/* Make the storage debug lists easy to read */
+
+dl {
+	overflow: hidden;
+}
+
+dt, dd {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+dt {
+	float: left;
+	clear: left;
+	width: 190px;
+	padding: 0 10px 0 20px;
+	font-weight: bold;
+}
+
+dd {
+	clear: right;
+	margin-left: 190px;
+}
+
+dl > dt:nth-of-type(even),
+dl > dt:nth-of-type(even) + dd {
+	background: rgba(150,160,200,0.25);
+}
+
+
+/* Get rid of unnecessary styling if this is a Speed Dial's preferences page */
+
+@media (max-width: 480px) and (max-height: 360px) {
+	html {
+		background: #f4f4f5;
+	}
+	
+	#topbar {
+		display: none;
+	}
+
+	#viewport {
+		top: 0;
+	}
+	
+	#content {
+		padding: 20px;
+		margin: 0;
+		background: transparent;
+	}
+	
+	header, footer {
+		display: none;
+	}
+}

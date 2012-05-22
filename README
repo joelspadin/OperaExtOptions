@@ -1,15 +1,16 @@
-OperaExtOptions 1.0.2
+OperaExtOptions 1.1
 
 This is a JavaScript library for automating the options pages of Opera
 extensions. It does two things. First, it provides a class that uses JSON to 
 save arbitrary objects to widget.preferences (or other storage) instead of only 
-strings. Second, it links the <input> and <select> elements of your options page
-with storage so that the page is automatically popluated with settings, and 
-changes to those settings are saved back to storage.
+strings. Second, it links the <input>, <select> and <textarea> elements of your 
+options page with storage so that the page is automatically popluated with 
+settings, and changes to those settings are saved back to storage.
 
 The only files you need to add to your project are the two script files in the
-build directory: storage.js and options_page.js. Everything else in the src
-directory is an example extension.
+src/js directory: storage.js and options_page.js. Everything else in the src
+directory is an example extension. You may also use the included options page
+and stylesheet to make your options page appear like Opera's extensions manager.
 
 
 
@@ -33,8 +34,9 @@ will walk through all the <input> and <select> elements on the page, linking
 them to settings with the same name. 
 
 Now you're done. Any setting in your options page that can be represented by an 
-<input> or <select> element or radio button group of <input> elements will 
-automatically be saved to widget.preferences or your storage object of choice.
+<input>, <select> or <textarea> element or radio button group of <input> 
+elements will automatically be saved to widget.preferences or your storage 
+object of choice.
 
 To retrieve setting values, use the get() method of your SettingStorage object.
 You can also manually change settings through this object. See the documentation
@@ -70,6 +72,12 @@ http://my.opera.com/spadija/
 
 
 Changelog
+
+May 21, 2012:
+	- Added a stylesheet which makes the options page look like Opera's extension
+	  manager. This should provide a nice starting point for styling your options
+	  page.
+	- Reorganized some files.
 
 Feb 26, 2012:
 	- Settings can now be accessed as properties of the SettingStorage object.
